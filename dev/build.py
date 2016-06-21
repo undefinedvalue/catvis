@@ -6,7 +6,7 @@ import build_pipeline.build
 import workflow.server
 
 base_dir = dirname(dirname(abspath(__file__)))
-src_dir = join(base_dir, 'src')
+src_dir = join(base_dir, 'www')
 dst_dir = join(base_dir, 'build')
 
 def build(args):
