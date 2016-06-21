@@ -1,0 +1,9 @@
+[
+  {
+    "Status": "Queued",
+    "StartTime": "2016-06-20T22:21:24-07:00",
+    "STDOUT": "/foo/bar.txt",
+    "STDERR": "/foo/err.txt",
+    "Command": "foo bar baz"
+  }
+]

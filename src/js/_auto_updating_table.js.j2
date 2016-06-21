@@ -1,0 +1,33 @@
+catjs.AutoUpdatingTable = function(tableCSS, dataPath, makeHeader, makeRow) {
+  var that = this;
+
+  var updateTable = function(data) {
+    if (data.length == 0) {
+      return setNoData();
+    }
+
+    var table = $(tableCSS);
+    table.empty();
+    table.append(makeHeader(data));
+
+    $.each(data, function(i, row) {
+      var escaped = {};
+      $.each(row, function(k,v) { escaped[k] = catjs.escapeHtml(v); });
+      table.append(makeRow(i, escaped));
+    });
+
+    that.afterUpdate();
+  };
+
+  var setNoData = function() {
+    $(tableCSS).html('<tr><th>No data yet</th></tr>');
+  };
+
+  this.afterUpdate = function() {};
+
+  this.start = function() {
+    var au = new catjs.AutoUpdater(dataPath, 5000, updateTable, setNoData);
+    au.start();
+  };
+}
+

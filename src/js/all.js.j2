@@ -1,0 +1,32 @@
+var catjs = {};
+
+(function() {
+  var entityMap = {
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': '&quot;',
+    "'": '&#39;'
+  };
+
+  catjs.escapeHtml = function(string) {
+    return string && String(string).replace(/[&<>"']/g, function (s) {
+      return entityMap[s];
+    });
+  };
+
+  catjs.queryParam = function(name) {
+    var url = window.location.href;
+    var name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)");
+    var results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+  };
+})();
+
+{% include 'js/_auto_update.js.j2' %}
+{% include 'js/_auto_updating_table.js.j2' %}
+{% include 'js/_scoreboard.js.j2' %}
+{% include 'js/_simulations.js.j2' %}

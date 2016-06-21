@@ -1,0 +1,48 @@
+catjs.scoreboard = function() {
+  var makeHeader = function(data) {
+    var header = $('<tr/>');
+    header.append($('<th/>', {'class': 'icon'}));
+
+    $.each(data[0], function(key, value) {
+      if (key != 'Change') {
+        header.append($('<th/>', {text: key}));
+      }
+    });
+
+    return header;
+  };
+
+  var makeRow = function(i, rowData) {
+    var row = $('<tr/>', {'class': 'change-' + rowData['Change']})
+    var first = true;
+
+    $.each(rowData, function(key, value) {
+      if (typeof value === 'string' && value.length > 33) {
+        value = value.substring(0, 32) + '&hellip;';
+      }
+
+      if (first) {
+        first = false;
+
+        row.append($('<td/>', {
+          'class': 'icon',
+          html: $('<span/>')
+        }));
+      }
+
+      row.append($('<td/>', {text: value}));
+    });
+
+    return row;
+  };
+
+  return {
+    update: function() {
+      var aut = new catjs.AutoUpdatingTable('#scores',
+          '/data/scoreboard.json', makeHeader, makeRow);
+
+      aut.start();
+    }
+  };
+}();
+
