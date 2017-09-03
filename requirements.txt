@@ -3,3 +3,4 @@ jinja2
 libsass
 boto3
 crossbar
+test
